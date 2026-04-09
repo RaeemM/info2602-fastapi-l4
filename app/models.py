@@ -35,6 +35,14 @@ class TodoCategory(SQLModel, table=True):
     category_id: int = Field(foreign_key="category.id", primary_key=True)
     todo_id: int = Field(foreign_key="todo.id", primary_key=True)
 
+class CategoryCreate(SQLModel):
+    text: str
+
+class CategoryResponse:
+    id: Optional[int] = Field(primary_key=True, default=None)
+    user_id: int = Field(foreign_key="regularuser.id")
+    text:str
+    
 class Category(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True, default=None)
     user_id: int = Field(foreign_key="regularuser.id")
@@ -49,6 +57,7 @@ class TodoResponse(SQLModel):
     id: Optional[int] = Field(primary_key=True, default=None)
     text:str
     done: bool = False
+    categories: list['Category']
 
 class TodoUpdate(SQLModel):
     text: Optional[str] = None
